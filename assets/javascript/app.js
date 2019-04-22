@@ -152,11 +152,18 @@ $(document).on("click", "#submit", function (event) {
     renderButtons();
 });
 
-
-function clear() {
+$("#clear").on("click", function () {
     $("#gifs-appear-here").empty();
-}
-$("#clear").on("click", clear);
+});
+
+
+// function clear() {
+//     $("#gifs-appear-here").empty();
+// }
+// $("#clear").on("click", clear);
+
+
+
 
 
 
