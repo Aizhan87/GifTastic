@@ -17,11 +17,15 @@ function renderButtons() {
 renderButtons();
 
 
+
 var data = sessionStorage.getItem("image")
 console.log(JSON.parse(data))
 if (data) {
     rederGifs(JSON.parse(data))
 }
+
+
+
 
 function rederGifs(response) {
     for (var i = 0; i < response.length; i++) {
@@ -38,9 +42,9 @@ function rederGifs(response) {
         downloadButon.addClass("btn btn-danger")
         downloadButon.text("Download")
         var downloadableLink = linkTag.append(downloadButon)
-        var favoritesButton = $("<button>")
-        favoritesButton.addClass("btn btn-success favorite")
-        favoritesButton.text("Favorites")
+        // var favoritesButton = $("<button>")
+        // favoritesButton.addClass("btn btn-success favorite")
+        // favoritesButton.text("Favorites")
 
 
 
@@ -57,7 +61,7 @@ function rederGifs(response) {
         gifDiv.append(gifImage);
         gifDiv.append(trendingDate);
         gifDiv.append(downloadableLink);
-        gifDiv.append(favoritesButton)
+        // gifDiv.append(favoritesButton)
 
 
         $("#gifs-appear-here").prepend(gifDiv);
@@ -155,9 +159,10 @@ function clear() {
 $("#clear").on("click", clear);
 
 
-$(document).on("click", ".favorite", function (event) {
-    event.preventDefault();
-    console.log("hello")
 
+// var storedGif = []
 
-})
+// function moveToFavorites() {
+//     $("#favorites").append(rederGifs())
+// }
+// $(".favorite").on("click", moveToFavorites());
