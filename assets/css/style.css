@@ -22,3 +22,16 @@ div{
     float: left;
     margin: 10px;
 }
+#favorites{
+    clear: both;
+    margin-left: 600px;
+    position: fixed;
+    border: 5px solid red;
+    width: 400px;
+    height:400px;
+    margin: 20px;
+}
+
+.favorite{
+    margin: 5px;
+}

@@ -16,10 +16,58 @@ function renderButtons() {
 }
 renderButtons();
 
+
+var data = sessionStorage.getItem("image")
+console.log(JSON.parse(data))
+if (data) {
+    rederGifs(JSON.parse(data))
+}
+
+function rederGifs(response) {
+    for (var i = 0; i < response.length; i++) {
+
+        var gifDiv = $("<div>");
+
+        var gifTitle = $("<p>").text("Title: " + response[i].title);
+        var trendingDate = $("<p>").text("Trending date: " + response[i].trending_datetime)
+
+        var linkTag = $("<a>")
+        linkTag.attr("href", response[i].images.fixed_height.url)
+        linkTag.attr("download", "")
+        var downloadButon = $("<button>")
+        downloadButon.addClass("btn btn-danger")
+        downloadButon.text("Download")
+        var downloadableLink = linkTag.append(downloadButon)
+        var favoritesButton = $("<button>")
+        favoritesButton.addClass("btn btn-success favorite")
+        favoritesButton.text("Favorites")
+
+
+
+
+        var gifImage = $("<img>");
+        gifImage.attr("src", response[i].images.fixed_height_still.url);
+        gifImage.attr("data-still", response[i].images.fixed_height_still.url)
+        gifImage.attr("data-animate", response[i].images.fixed_height.url)
+        gifImage.attr("data-state", "still")
+        gifImage.addClass("gif")
+
+
+        gifDiv.append(gifTitle);
+        gifDiv.append(gifImage);
+        gifDiv.append(trendingDate);
+        gifDiv.append(downloadableLink);
+        gifDiv.append(favoritesButton)
+
+
+        $("#gifs-appear-here").prepend(gifDiv);
+
+    }
+}
+
 $(document).on("click", ".btn-info", function () {
     var reaction = $(this).attr("data-name");
     console.log(reaction)
-
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         reaction + "&api_key=5a788EyWGS9rH1TXpGNmHwNnFCG4YqeP&limit=5";
 
@@ -33,30 +81,47 @@ $(document).on("click", ".btn-info", function () {
 
             console.log(response);
             var results = response.data;
+            sessionStorage.clear();
+            sessionStorage.setItem("image", JSON.stringify(results));
+            rederGifs(results)
 
-            for (var i = 0; i < results.length; i++) {
+            // for (var i = 0; i < results.length; i++) {
 
-                var gifDiv = $("<div>");
+            //     var gifDiv = $("<div>");
 
-                var gifTitle = $("<p>").text("Title: " + results[i].title);
-                var trendingDate = $("<p>").text("Trending date: " + results[i].trending_datetime)
+            //     var gifTitle = $("<p>").text("Title: " + results[i].title);
+            //     var trendingDate = $("<p>").text("Trending date: " + results[i].trending_datetime)
 
-                var gifImage = $("<img>");
-                gifImage.attr("src", results[i].images.fixed_height_still.url);
-                gifImage.attr("data-still", results[i].images.fixed_height_still.url)
-                gifImage.attr("data-animate", results[i].images.fixed_height.url)
-                gifImage.attr("data-state", "still")
-                gifImage.addClass("gif")
+            //     var linkTag = $("<a>")
+            //     linkTag.attr("href", results[i].images.fixed_height.url)
+            //     linkTag.attr("download", "")
+            //     var downloadButon = $("<button>")
+            //     downloadButon.addClass("btn btn-danger")
+            //     downloadButon.text("Download")
+            //     var downloadableLink = linkTag.append(downloadButon)
 
 
-                gifDiv.append(gifTitle);
-                gifDiv.append(gifImage);
-                gifDiv.append(trendingDate);
 
-                $("#gifs-appear-here").prepend(gifDiv);
-            }
+            //     var gifImage = $("<img>");
+            //     gifImage.attr("src", results[i].images.fixed_height_still.url);
+            //     gifImage.attr("data-still", results[i].images.fixed_height_still.url)
+            //     gifImage.attr("data-animate", results[i].images.fixed_height.url)
+            //     gifImage.attr("data-state", "still")
+            //     gifImage.addClass("gif")
+
+
+            //     gifDiv.append(gifTitle);
+            //     gifDiv.append(gifImage);
+            //     gifDiv.append(trendingDate);
+            //     gifDiv.append(downloadableLink);
+
+
+            //     $("#gifs-appear-here").prepend(gifDiv);
+
+            // }
         });
 });
+
 
 $(document).on("click", ".gif", function () {
 
@@ -83,3 +148,16 @@ $(document).on("click", "#submit", function (event) {
     renderButtons();
 });
 
+
+function clear() {
+    $("#gifs-appear-here").empty();
+}
+$("#clear").on("click", clear);
+
+
+$(document).on("click", ".favorite", function (event) {
+    event.preventDefault();
+    console.log("hello")
+
+
+})
