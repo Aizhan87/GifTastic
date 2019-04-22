@@ -1,0 +1,24 @@
+body{
+    background: url("../images/background\ image.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+}
+
+.btn.btn-info{
+    margin: 10px;
+}
+
+#submit{
+    margin: 10px;
+}
+
+.form-group{
+    margin-left: 500px;
+    clear: both;
+}
+div{
+    float: left;
+    margin: 10px;
+}
